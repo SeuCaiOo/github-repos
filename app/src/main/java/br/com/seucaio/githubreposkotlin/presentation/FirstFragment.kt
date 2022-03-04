@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin
+package br.com.seucaio.githubreposkotlin.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.FragmentFirstBinding
 
 /**

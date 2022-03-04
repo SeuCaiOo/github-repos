@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin
+package br.com.seucaio.githubreposkotlin.presentation
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -9,6 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
