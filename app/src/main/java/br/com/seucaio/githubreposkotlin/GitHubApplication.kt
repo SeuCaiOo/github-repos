@@ -2,6 +2,7 @@ package br.com.seucaio.githubreposkotlin
 
 import android.app.Application
 import br.com.seucaio.githubreposkotlin.di.DataModule
+import br.com.seucaio.githubreposkotlin.di.DomainModule
 import br.com.seucaio.githubreposkotlin.di.PresentationModule
 import br.com.seucaio.githubreposkotlin.di.RemoteModule
 import org.koin.android.ext.koin.androidContext
@@ -32,6 +33,7 @@ class GitHubApplication : Application() {
                         Level.DEBUG -> Timber.d(msg)
                         Level.INFO -> Timber.i(msg)
                         Level.ERROR -> Timber.e(msg)
+                        else -> Timber.v(msg)
                     }
                 }
             })
@@ -43,6 +45,7 @@ class GitHubApplication : Application() {
     private fun loadAllModules() {
         RemoteModule.load()
         DataModule.load()
+        DomainModule.load()
         PresentationModule.load()
     }
 }

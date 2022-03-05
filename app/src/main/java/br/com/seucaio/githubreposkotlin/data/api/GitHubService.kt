@@ -12,9 +12,8 @@ interface GitHubService {
 
     @GET("/search/repositories")
     suspend fun getRepositoriesSearchKotlin(
-        @Query("q")  query: String,
-//        @Query("language")  language: String,
-        @Query("sort")  sort: String,
+        @Query("q")  query: String = "language:kotlin",
+        @Query("sort")  sort: String = "stars",
         @Query("page")  page : Int = 1
     ) : RepositoriesResponse
 

@@ -9,12 +9,6 @@ class GitHubDataSourceImpl(
     private val service: GitHubService,
 ) : GitHubDataSource {
     override fun getRepositoriesSearchKotlin(): Flow<RepositoriesResponse> {
-        return flow {
-            emit(service.getRepositoriesSearchKotlin(
-                query = "language:kotlin",
-                sort = "stars"
-            ))
-        }
+        return flow { emit(service.getRepositoriesSearchKotlin()) }
     }
-
 }

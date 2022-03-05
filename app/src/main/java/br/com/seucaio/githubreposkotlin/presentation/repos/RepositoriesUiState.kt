@@ -1,14 +1,15 @@
 package br.com.seucaio.githubreposkotlin.presentation.repos
 
 import br.com.seucaio.githubreposkotlin.data.model.RepositoriesResponse
+import br.com.seucaio.githubreposkotlin.domain.entity.Repos
 
 data class RepositoriesUiState(
-    val repos: RepositoriesResponse? = null,
+    val repos: Repos? = null,
     var isLoading: Boolean = false,
     val hasError : Boolean = false,
 ) {
 
-    fun setRepos(list: RepositoriesResponse): RepositoriesUiState {
+    fun setRepos(list: Repos): RepositoriesUiState {
         return this.copy(repos = list)
     }
 
