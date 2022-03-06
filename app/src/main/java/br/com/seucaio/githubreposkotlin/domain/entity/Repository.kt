@@ -1,9 +1,6 @@
 package br.com.seucaio.githubreposkotlin.domain.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-data class Repo(
+data class Repository(
     val allowForking: Boolean = false,
     val archiveUrl: String? = null,
     val archived: Boolean = false,

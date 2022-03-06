@@ -7,22 +7,22 @@ import br.com.seucaio.githubreposkotlin.data.model.RepositoriesResponse
 import br.com.seucaio.githubreposkotlin.data.model.RepositoryResponse
 import br.com.seucaio.githubreposkotlin.domain.entity.License
 import br.com.seucaio.githubreposkotlin.domain.entity.Owner
-import br.com.seucaio.githubreposkotlin.domain.entity.Repo
-import br.com.seucaio.githubreposkotlin.domain.entity.Repos
+import br.com.seucaio.githubreposkotlin.domain.entity.Repository
+import br.com.seucaio.githubreposkotlin.domain.entity.Repositories
 
-typealias ReposMapper = Mapper<RepositoriesResponse, Repos>
+typealias RepositoriesMapper = Mapper<RepositoriesResponse, Repositories>
 
-class ReposMapperImpl : ReposMapper {
-    override fun map(source: RepositoriesResponse): Repos {
-        return Repos(
+class RepositoriesMapperImpl : RepositoriesMapper {
+    override fun map(source: RepositoriesResponse): Repositories {
+        return Repositories(
             incompleteResults = source.incompleteResults,
             items = source.items?.map { mapperRepo(it) },
             totalCount = source.totalCount,
         )
     }
 
-    private fun mapperRepo(source: RepositoryResponse): Repo {
-        return Repo(
+    private fun mapperRepo(source: RepositoryResponse): Repository {
+        return Repository(
             allowForking = source.allowForking,
             archiveUrl = source.archiveUrl,
             archived = source.archived,

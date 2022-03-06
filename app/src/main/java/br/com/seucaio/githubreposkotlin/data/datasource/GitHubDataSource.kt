@@ -4,5 +4,5 @@ import br.com.seucaio.githubreposkotlin.data.model.RepositoriesResponse
 import kotlinx.coroutines.flow.Flow
 
 interface GitHubDataSource {
-    fun getRepositoriesSearchKotlin() : Flow<RepositoriesResponse>
+    fun getRepositoryListKotlin() : Flow<RepositoriesResponse>
 }

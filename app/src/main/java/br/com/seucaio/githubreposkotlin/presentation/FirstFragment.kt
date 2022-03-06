@@ -22,7 +22,7 @@ private var _binding: FragmentFirstBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
       _binding = FragmentFirstBinding.inflate(inflater, container, false)
       return binding.root
@@ -33,7 +33,7 @@ private var _binding: FragmentFirstBinding? = null
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            findNavController().navigate(R.id.action_list_repositories)
         }
     }
 

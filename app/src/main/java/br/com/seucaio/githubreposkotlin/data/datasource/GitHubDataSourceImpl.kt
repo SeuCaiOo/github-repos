@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 class GitHubDataSourceImpl(
     private val service: GitHubService,
 ) : GitHubDataSource {
-    override fun getRepositoriesSearchKotlin(): Flow<RepositoriesResponse> {
+    override fun getRepositoryListKotlin(): Flow<RepositoriesResponse> {
         return flow { emit(service.getRepositoriesSearchKotlin()) }
     }
 }

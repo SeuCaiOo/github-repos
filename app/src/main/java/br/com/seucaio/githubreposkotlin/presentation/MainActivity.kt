@@ -1,18 +1,13 @@
 package br.com.seucaio.githubreposkotlin.presentation
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.ActivityMainBinding
-import br.com.seucaio.githubreposkotlin.presentation.repos.RepositoriesViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,37 +15,16 @@ class MainActivity : AppCompatActivity() {
     private val navController by lazy { findNavController(R.id.nav_host_fragment_content_main) }
     private val appBarConfiguration by lazy { AppBarConfiguration(navController.graph) }
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val viewModel by viewModel<RepositoriesViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-
-        viewModel.getRepositories()
-
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        binding.fab.setOnClickListener {
+            navController.navigate(R.id.action_list_repositories)
         }
     }
 

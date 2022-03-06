@@ -1,7 +1,7 @@
 package br.com.seucaio.githubreposkotlin.domain.entity
 
-data class Repos(
+data class Repositories(
     val incompleteResults: Boolean = false,
-    val items: List<Repo>? = null,
+    val items: List<Repository>? = null,
     val totalCount: Int? = null,
 )
