@@ -17,8 +17,8 @@ class RepositoryListItemViewHolder(
             progressBar.visibility = View.VISIBLE
             Picasso.get()
                 .load(repository.owner?.avatarUrl)
-                .error(R.drawable.ic_error_24)
-                .into(ivAvatar, object : Callback {
+                .error(R.drawable.ic_image)
+                .into(ivOwnerAvatar, object : Callback {
                     override fun onSuccess() {
                         progressBar.visibility = View.GONE
                     }
@@ -27,11 +27,12 @@ class RepositoryListItemViewHolder(
                         progressBar.visibility = View.GONE
                     }
                 })
-            val icPrivate = if (repository.isPrivate) R.drawable.ic_lock_24 else R.drawable.ic_public_24
-            ivPrivate.setImageResource(icPrivate)
+
             tvName.text = repository.name
             tvFullName.text = repository.fullName
-            tvDescription.text = repository.description
+            tvOwnerName.text = repository.owner?.login
+            tvStars.text = repository.stargazersCount.toString()
+            tvForks.text = repository.forksCount.toString()
         }
     }
 }

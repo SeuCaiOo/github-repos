@@ -10,72 +10,118 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ivAvatar"
+            android:id="@+id/ivOwnerAvatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDescription"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvName"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDescription"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvName" />
-
-        <ImageView
-            android:id="@+id/ivPrivate"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDescription"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvName"
-            tools:src="@drawable/ic_public_24" />
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/ivOwnerAvatar"
+            app:layout_constraintEnd_toEndOf="@+id/ivOwnerAvatar"
+            app:layout_constraintStart_toStartOf="@+id/ivOwnerAvatar"
+            app:layout_constraintTop_toTopOf="@+id/ivOwnerAvatar" />
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvFullName"
-            app:layout_constraintEnd_toStartOf="@+id/ivPrivate"
-            app:layout_constraintStart_toStartOf="@+id/tvFullName"
-            tools:text="@tools:sample/first_names" />
+            app:layout_constraintEnd_toStartOf="@+id/tvStars"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivOwnerAvatar"
+            app:layout_constraintTop_toTopOf="@+id/ivOwnerAvatar"
+            tools:text="Nome do Repositório" />
 
         <TextView
             android:id="@+id/tvFullName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
-            app:layout_constraintEnd_toStartOf="@+id/ivPrivate"
-            app:layout_constraintStart_toStartOf="@+id/tvDescription"
-            tools:text="@tools:sample/full_names" />
+            app:layout_constraintBottom_toTopOf="@+id/tvOwnerName"
+            app:layout_constraintEnd_toEndOf="@+id/tvName"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            tools:text="Nome Completo do Repositório" />
 
         <TextView
-            android:id="@+id/tvDescription"
+            android:id="@+id/tvOwnerName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivOwnerAvatar"
+            app:layout_constraintEnd_toEndOf="@+id/tvFullName"
+            app:layout_constraintStart_toStartOf="@+id/tvFullName"
+            app:layout_constraintTop_toBottomOf="@+id/tvFullName"
+            tools:text="Nome do Autor" />
+
+        <ImageView
+            android:id="@+id/ivStars"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintBottom_toTopOf="@+id/tvStars"
+            app:layout_constraintEnd_toEndOf="@+id/tvStars"
+            app:layout_constraintStart_toStartOf="@+id/tvStars"
+            app:layout_constraintTop_toTopOf="@+id/tvName"
+            app:tint="@color/yellow_700" />
+
+        <TextView
+            android:id="@+id/tvStars"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivPrivate"
-            app:layout_constraintStart_toEndOf="@+id/ivAvatar"
-            tools:text="@tools:sample/lorem[5]" />
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/ivForks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivStars"
+            tools:text="100500" />
+
+        <ImageView
+            android:id="@+id/ivForks"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_code_fork"
+            app:layout_constraintBottom_toTopOf="@+id/tvForks"
+            app:layout_constraintEnd_toEndOf="@+id/tvStars"
+            app:layout_constraintStart_toStartOf="@+id/tvStars"
+            app:layout_constraintTop_toBottomOf="@+id/tvStars" />
+
+        <TextView
+            android:id="@+id/tvForks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvOwnerName"
+            app:layout_constraintEnd_toEndOf="@+id/tvStars"
+            app:layout_constraintStart_toStartOf="@+id/tvStars"
+            app:layout_constraintTop_toBottomOf="@+id/ivForks"
+            tools:text="949" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
