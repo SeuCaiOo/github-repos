@@ -35,9 +35,9 @@ class RepositoryListFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModel<RepositoryListViewModel>()
 
-    private val adapter by lazy { RepositoryListAdapter(clickPost()) }
+    private val adapter by lazy { RepositoryListAdapter(clickRepository()) }
 
-    private fun clickPost(): (Repository) -> Unit = {
+    private fun clickRepository(): (Repository) -> Unit = {
         Snackbar.make(binding.root, "#${it.id}", Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
     }
