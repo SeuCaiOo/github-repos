@@ -3,7 +3,7 @@ package br.com.seucaio.githubreposkotlin.data.api
 import app.cash.turbine.test
 import br.com.seucaio.githubreposkotlin.core.utils.createRetrofit
 import br.com.seucaio.githubreposkotlin.core.stub.RepositoryStub
-import br.com.seucaio.githubreposkotlin.core.enqueueResponse
+import br.com.seucaio.githubreposkotlin.core.ext.enqueueResponse
 import br.com.seucaio.githubreposkotlin.data.datasource.GitHubDataSourceImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

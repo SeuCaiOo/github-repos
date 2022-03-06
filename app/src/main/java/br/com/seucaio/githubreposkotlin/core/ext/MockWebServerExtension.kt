@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.core
+package br.com.seucaio.githubreposkotlin.core.ext
 
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
