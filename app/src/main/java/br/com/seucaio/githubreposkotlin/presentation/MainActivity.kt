@@ -1,5 +1,6 @@
 package br.com.seucaio.githubreposkotlin.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +15,7 @@ import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.ActivityMainBinding
 import br.com.seucaio.githubreposkotlin.domain.entity.Repositories
 import br.com.seucaio.githubreposkotlin.domain.entity.Repository
+import br.com.seucaio.githubreposkotlin.presentation.compose.ListActivity
 import br.com.seucaio.githubreposkotlin.presentation.repository.RepositoryListViewModel
 import br.com.seucaio.githubreposkotlin.presentation.repository.adapter.RepositoryListAdapter
 import com.google.android.material.snackbar.Snackbar
@@ -40,6 +42,14 @@ class MainActivity : AppCompatActivity() {
         setupToolbar()
         viewModel.getRepositories()
         onStateChange()
+
+
+        binding.fab.setOnClickListener {
+            val intent = Intent(this, ListActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
     private fun setupToolbar() {
