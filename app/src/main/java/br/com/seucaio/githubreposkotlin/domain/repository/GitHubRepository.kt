@@ -4,5 +4,5 @@ import br.com.seucaio.githubreposkotlin.domain.entity.Repositories
 import kotlinx.coroutines.flow.Flow
 
 interface GitHubRepository {
-    fun getRepositoryListKotlin() : Flow<Repositories>
+    fun getRepositoryListKotlin(page: Int): Flow<Repositories>
 }

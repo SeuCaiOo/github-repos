@@ -3,6 +3,7 @@ package br.com.seucaio.githubreposkotlin.presentation
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
@@ -10,6 +11,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.ActivityMainBinding
 import br.com.seucaio.githubreposkotlin.domain.entity.Repositories
@@ -84,8 +87,30 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.isGone = isLoading
     }
 
-    private fun showRepos(repositories: Repositories?) {
-        repositories?.items?.let { adapter.submitList(it) }
+    private fun showRepos(repositories: List<Repository>?) {
+        repositories?.let {
+            with(binding) {
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                adapter.submitList(it)
+                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        handleScrollToLastItem(layoutManager, adapter)
+                    }
+                })
+            }
+        }
+    }
+
+    private fun handleScrollToLastItem(
+        layoutManager: LinearLayoutManager,
+        adapter: RepositoryListAdapter,
+    ) {
+        val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+        if (lastVisibleItemPosition == adapter.itemCount - 1) {
+            Snackbar.make(binding.root, "Carregar mais itens", Snackbar.LENGTH_LONG).show()
+            viewModel.getNextPage()
+        }
     }
 
     private fun showError() {

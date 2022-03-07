@@ -89,8 +89,8 @@ class RepositoryListFragment : Fragment() {
         binding.recyclerView.isGone = isLoading
     }
 
-    private fun showRepos(repositories: Repositories?) {
-        repositories?.items?.let { adapter.submitList(it) }
+    private fun showRepos(repositories: List<Repository>?) {
+        repositories?.let { adapter.submitList(it) }
     }
 
     private fun showError() {

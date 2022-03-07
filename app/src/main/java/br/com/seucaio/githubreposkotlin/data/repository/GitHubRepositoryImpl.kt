@@ -11,7 +11,9 @@ class GitHubRepositoryImpl(
     private val dataSource: GitHubDataSource,
     private val mapper: RepositoriesMapper,
 ) : GitHubRepository {
-    override fun getRepositoryListKotlin(): Flow<Repositories> {
-        return dataSource.getRepositoryListKotlin().map(mapper::map)
+    override fun getRepositoryListKotlin(page: Int): Flow<Repositories> {
+        return dataSource.getRepositoryListKotlin(
+            page = page
+        ).map(mapper::map)
     }
 }
