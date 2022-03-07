@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.recyclerView.adapter = adapter
+        setupRecyclerView()
         setupToolbar()
         viewModel.getRepositories()
         onStateChange()
@@ -68,6 +68,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun setupRecyclerView() {
+        with(binding) {
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            binding.recyclerView.adapter = adapter
+            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        }
+    }
+
     private fun onStateChange() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -86,29 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showRepos(repos: List<Repo>?) {
-        repos?.let {
-            with(binding) {
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                adapter.submitList(it)
-                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        super.onScrollStateChanged(recyclerView, newState)
-                        handleScrollToLastItem(layoutManager, adapter)
-                    }
-                })
-            }
-        }
-    }
-
-    private fun handleScrollToLastItem(
-        layoutManager: LinearLayoutManager,
-        adapter: RepoListAdapter,
-    ) {
-        val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-        if (lastVisibleItemPosition == adapter.itemCount - 1) {
-            Snackbar.make(binding.root, "Carregar mais itens", Snackbar.LENGTH_LONG).show()
-            viewModel.getNextPage()
-        }
+        repos?.let { adapter.submitList(it) }
     }
 
     private fun showError() {

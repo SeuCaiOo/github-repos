@@ -15,13 +15,11 @@ class RepoListViewModel(
 ) : ViewModel() {
 
     private var nextPage = 1
-    private var getMore = false
 
     private val _uiState = MutableStateFlow(RepoListUiState())
     val uiState: StateFlow<RepoListUiState> = _uiState
 
     fun getRepositories() {
-        getMore = false
         viewModelScope.launch {
             useCase.invoke(nextPage)
                 .flowOn(dispatcher)
@@ -32,24 +30,11 @@ class RepoListViewModel(
         }
     }
 
-    fun getNextPage() {
-        if (getMore) getRepositories()
-    }
-
     private fun handleSuccess(response: List<Repo>?) {
         if (response.isNullOrEmpty()) {
             setState(RepoListUiState().setError(true))
         } else {
-            val list = if (getMore) {
-                uiState.value.repos?.toMutableList()?.let {
-                    return response.forEach { response -> it.add(response) }
-                } ?: emptyList()
-            } else {
-                response
-            }
-            setState(RepoListUiState().setRepos(list))
-            nextPage += 1
-            getMore = true
+            setState(RepoListUiState().setRepos(response))
         }
     }
 

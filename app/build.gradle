@@ -38,20 +38,23 @@ android {
 
 dependencies {
 
+    // Android arch
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "androidx.appcompat:appcompat:1.4.1"
     implementation "com.google.android.material:material:1.5.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.3"
+    // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.4.1"
     implementation "androidx.navigation:navigation-ui-ktx:2.4.1"
+    // Kotlin-Serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
-
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
 //    implementation "androidx.lifecycle:lifecycle-compiler:2.4.1"
-
+    // Recycler
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
 
