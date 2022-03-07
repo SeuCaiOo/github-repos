@@ -21,3 +21,23 @@ fun MockWebServer.enqueueResponse(code: Int, fileName: String? = null) {
         enqueue(MockResponse().setResponseCode(code))
     }
 }
+
+fun MockWebServer.getResponse(code: Int, fileName: String? = null): MockResponse {
+    return fileName?.let {
+        val inputStream = javaClass.classLoader?.getResourceAsStream(fileName)
+        val source = inputStream?.let { inputStream.source().buffer() }
+        source?.let {
+            MockResponse()
+                .setResponseCode(code)
+                .setBody(source.readString(StandardCharsets.UTF_8))
+        }
+    } ?: run {
+        MockResponse().setResponseCode(code)
+    }
+}
+
+fun String.readResponse(): String {
+    val inputStream = javaClass.classLoader?.getResourceAsStream(this)
+    val source = inputStream?.let { inputStream.source().buffer() }
+    return source?.let { source.readString(StandardCharsets.UTF_8) } ?: return ""
+}

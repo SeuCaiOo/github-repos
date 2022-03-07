@@ -10,7 +10,7 @@ interface GitHubService {
     suspend fun getRepositories() : RepositoriesResponse
 
 
-    @GET("/search/repositories")
+    @GET("search/repositories")
     suspend fun getRepositoriesSearchKotlin(
         @Query("q")  query: String = "language:kotlin",
         @Query("sort")  sort: String = "stars",

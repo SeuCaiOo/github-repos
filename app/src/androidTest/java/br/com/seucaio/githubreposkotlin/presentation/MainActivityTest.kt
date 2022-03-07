@@ -6,15 +6,38 @@ import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.platform.app.InstrumentationRegistry
 import br.com.seucaio.githubreposkotlin.R
+import br.com.seucaio.githubreposkotlin.RecyclerViewMatchers.checkRecyclerViewItem
+import br.com.seucaio.githubreposkotlin.core.ext.getResponse
+import br.com.seucaio.githubreposkotlin.core.ext.readResponse
 import br.com.seucaio.githubreposkotlin.core.utils.createRetrofit
 import br.com.seucaio.githubreposkotlin.data.api.GitHubService
+import br.com.seucaio.githubreposkotlin.data.datasource.GitHubDataSource
 import br.com.seucaio.githubreposkotlin.data.datasource.GitHubDataSourceImpl
+import br.com.seucaio.githubreposkotlin.data.mapper.RepositoriesMapperImpl
+import br.com.seucaio.githubreposkotlin.data.repository.GitHubRepositoryImpl
+import br.com.seucaio.githubreposkotlin.domain.repository.GitHubRepository
+import br.com.seucaio.githubreposkotlin.domain.usecase.GetRepositoryListKotlinUseCase
+import br.com.seucaio.githubreposkotlin.presentation.repository.RepositoryListViewModel
+import okhttp3.mockwebserver.Dispatcher
+import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.unloadKoinModules
+import org.koin.core.module.Module
+import org.koin.dsl.module
+import retrofit2.Retrofit
+
+
+private const val REPOSITORY_LIST_SUCCESS_RESPONSE = "repository/repository_list_success_response.json"
 
 class MainActivityTest {
 
@@ -22,18 +45,48 @@ class MainActivityTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
-    private val mockWebServer = MockWebServer()
-    private val baseUrl = mockWebServer.url("/").toString()
-    private val service = createRetrofit(baseUrl).create(GitHubService::class.java)
-    private val dataSource = GitHubDataSourceImpl(service)
+
+
+    private val server = MockWebServer()
+    private val baseUrl = server.url("/").toString()
+//    private val service = createRetrofit(baseUrl).create(GitHubService::class.java)
+//    private val remoteDataSource = GitHubDataSourceImpl(service)
+//    private lateinit var remoteDataSource: GitHubDataSource
+
+    private lateinit var service: GitHubService
+
+    private lateinit var mockModule: Module
+
+
+
+    @Before
+    fun setup() {
+        service = createRetrofit(baseUrl).create(GitHubService::class.java)
+
+        mockModule = module(override = true) {
+            factory { get<Retrofit>().create(GitHubService::class.java) }
+            factory <GitHubDataSource> { GitHubDataSourceImpl(get()) }
+            single<GitHubRepository> {
+                GitHubRepositoryImpl(
+                    dataSource = get(),
+                    mapper = RepositoriesMapperImpl()
+                )
+            }
+            single { GetRepositoryListKotlinUseCase(get<GitHubRepository>()) }
+            viewModel { RepositoryListViewModel(get()) }
+        }
+
+        loadKoinModules(mockModule)
+    }
 
     @After
-    fun tearDown() {
-        mockWebServer.shutdown()
+    fun after() {
+        server.shutdown()
+        unloadKoinModules(mockModule)
     }
 
     @Test
-    fun shouldDisplayTitle() {
+    fun shouldDisplayToolbarTitle() {
         launchActivity<MainActivity>().apply {
             val expectedTitle = context.getString(R.string.repository_list_fragment_label)
 
@@ -42,6 +95,43 @@ class MainActivityTest {
             Espresso.onView(ViewMatchers.withText(expectedTitle))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         }
+    }
+
+    @Test
+    fun shouldDisplayListItem() {
+        server.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                return when (request.path) {
+                    "search/repositories" -> successResponse
+                    "/search/repositories" -> successResponse
+                    else -> errorResponse
+                }
+            }
+        }
+        server.enqueue(
+            server.getResponse(200, REPOSITORY_LIST_SUCCESS_RESPONSE)
+        )
+
+        launchActivity<MainActivity>().apply {
+            Espresso.onView(withId(R.id.recyclerView))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            checkRecyclerViewItem(R.id.recyclerView, 0, ViewMatchers.withText("square"))
+        }
+
+        server.close()
+    }
+
+
+    companion object {
+
+        private val successResponse by lazy {
+            val body = REPOSITORY_LIST_SUCCESS_RESPONSE.readResponse()
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(body)
+        }
+
+        private val errorResponse by lazy { MockResponse().setResponseCode(404) }
     }
 
 }
