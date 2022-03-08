@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.presentation.repo.adapter
+package br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,11 +13,8 @@ class RepoListAdapter(
 ) : ListAdapter<Repo, RepoListItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoListItemViewHolder {
-        val binding = ListItemRepoBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
-        return RepoListItemViewHolder(binding).apply {
-            itemView.setOnClickListener { onItemClicked(getItem(adapterPosition)) }
+        return RepoListItemViewHolder.create(parent).apply {
+            itemView.setOnClickListener { onItemClicked(getItem(bindingAdapterPosition)) }
         }
     }
 

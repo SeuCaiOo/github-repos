@@ -1,6 +1,8 @@
-package br.com.seucaio.githubreposkotlin.presentation.repo.adapter
+package br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.ListItemRepoBinding
@@ -9,7 +11,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class RepoListItemViewHolder(
-    private val binding: ListItemRepoBinding
+    private val binding: ListItemRepoBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(repo: Repo) {
@@ -33,6 +35,16 @@ class RepoListItemViewHolder(
             tvOwnerName.text = repo.owner?.login
             tvStars.text = repo.stargazersCount.toString()
             tvForks.text = repo.forksCount.toString()
+        }
+    }
+
+
+    companion object {
+        fun create(parent: ViewGroup): RepoListItemViewHolder {
+            val binding = ListItemRepoBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+            return RepoListItemViewHolder(binding)
         }
     }
 }

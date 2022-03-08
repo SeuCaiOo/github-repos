@@ -2,8 +2,13 @@ package br.com.seucaio.githubreposkotlin.presentation.repo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 import br.com.seucaio.githubreposkotlin.domain.usecase.GetRepoSearchKotlinUseCase
+import br.com.seucaio.githubreposkotlin.domain.usecase.GetRepoStreamUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -11,6 +16,7 @@ import kotlinx.coroutines.launch
 
 class RepoListViewModel(
     private val useCase: GetRepoSearchKotlinUseCase,
+    private val useCaseStream: GetRepoStreamUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
 
@@ -18,6 +24,15 @@ class RepoListViewModel(
 
     private val _uiState = MutableStateFlow(RepoListUiState())
     val uiState: StateFlow<RepoListUiState> = _uiState
+
+    private var currentSearchResult: Flow<PagingData<Repo>>? = null
+
+    fun searchRepo(): Flow<PagingData<Repo>> {
+        val newResult: Flow<PagingData<Repo>> = useCaseStream.invoke()
+            .cachedIn(viewModelScope)
+        currentSearchResult = newResult
+        return newResult
+    }
 
     fun getRepositories() {
         viewModelScope.launch {

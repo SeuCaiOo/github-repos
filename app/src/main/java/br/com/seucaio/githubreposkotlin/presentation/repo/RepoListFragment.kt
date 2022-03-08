@@ -15,7 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.FragmentReposBinding
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
-import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.RepoListAdapter
+import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list.RepoListAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
