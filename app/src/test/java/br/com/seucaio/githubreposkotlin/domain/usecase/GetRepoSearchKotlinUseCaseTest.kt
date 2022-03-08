@@ -1,5 +1,6 @@
 package br.com.seucaio.githubreposkotlin.domain.usecase
 
+import androidx.paging.PagingData
 import androidx.test.espresso.matcher.ViewMatchers
 import app.cash.turbine.test
 import br.com.seucaio.githubreposkotlin.core.stub.RepoStub
@@ -14,8 +15,6 @@ import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
 
-private const val PAGE_ONE = 1
-
 @ExperimentalTime
 class GetRepoSearchKotlinUseCaseTest {
     private val repository: GitHubRepository = mock()
@@ -24,15 +23,15 @@ class GetRepoSearchKotlinUseCaseTest {
     @Test
     fun `invoke Should return List Repo When is success`() = runBlocking {
         // Given
-        whenever(repository.getRepositoryListKotlin(PAGE_ONE))
-            .doReturn(flow { emit(RepoStub.Model.repoSearch) })
+        val expectedResult = PagingData.from(data = listOf(RepoStub.Model.repo))
+        whenever(repository.getRepositoryListKotlin()).doReturn(flow { emit(expectedResult) })
 
         // When
-        val result = useCase.invoke(PAGE_ONE)
+        val result = useCase.invoke()
 
         // Then
         result.test {
-            assertEquals(RepoStub.Model.repoSearch, expectItem())
+            assertEquals(expectedResult, expectItem())
             expectComplete()
         }
     }
@@ -41,10 +40,10 @@ class GetRepoSearchKotlinUseCaseTest {
     fun `invoke Should return Error When with error`() = runBlocking {
         // Given
         val expectedError = Throwable()
-        whenever(repository.getRepositoryListKotlin(PAGE_ONE)).doReturn(flow { throw expectedError })
+        whenever(repository.getRepositoryListKotlin()).doReturn(flow { throw expectedError })
 
         // When
-        val result = useCase.invoke(PAGE_ONE)
+        val result = useCase.invoke()
 
         // Then
         result.test {

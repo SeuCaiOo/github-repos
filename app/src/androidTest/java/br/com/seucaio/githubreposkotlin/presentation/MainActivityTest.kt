@@ -14,9 +14,8 @@ import br.com.seucaio.githubreposkotlin.core.ext.getResponse
 import br.com.seucaio.githubreposkotlin.core.ext.readResponse
 import br.com.seucaio.githubreposkotlin.core.utils.createRetrofit
 import br.com.seucaio.githubreposkotlin.data.api.GitHubService
-import br.com.seucaio.githubreposkotlin.data.datasource.GitHubDataSource
-import br.com.seucaio.githubreposkotlin.data.datasource.GitHubDataSourceImpl
-import br.com.seucaio.githubreposkotlin.data.mapper.RepoSearchMapperImpl
+import br.com.seucaio.githubreposkotlin.data.datasource.GitHubPagingSource
+import br.com.seucaio.githubreposkotlin.data.mapper.RepoMapperImpl
 import br.com.seucaio.githubreposkotlin.data.repository.GitHubRepositoryImpl
 import br.com.seucaio.githubreposkotlin.domain.repository.GitHubRepository
 import br.com.seucaio.githubreposkotlin.domain.usecase.GetRepoSearchKotlinUseCase
@@ -65,11 +64,11 @@ class MainActivityTest {
 
         mockModule = module(override = true) {
             factory { get<Retrofit>().create(GitHubService::class.java) }
-            factory <GitHubDataSource> { GitHubDataSourceImpl(get()) }
+            factory { GitHubPagingSource(get()) }
             single<GitHubRepository> {
                 GitHubRepositoryImpl(
-                    dataSource = get(),
-                    mapper = RepoSearchMapperImpl()
+                    pagingSource = get(),
+                    mapper = RepoMapperImpl()
                 )
             }
             single { GetRepoSearchKotlinUseCase(get<GitHubRepository>()) }
