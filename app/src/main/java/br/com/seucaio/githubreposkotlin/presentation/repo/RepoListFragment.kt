@@ -60,9 +60,6 @@ class RepoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.adapter = adapter
-        viewModel.getRepositories()
-        onStateChange()
     }
 
     override fun onDestroyView() {
@@ -70,32 +67,6 @@ class RepoListFragment : Fragment() {
         _binding = null
     }
 
-
-    private fun onStateChange() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    showRepos(uiState.repos)
-                    handleLoading(uiState.isLoading)
-                    if (uiState.hasError) showError()
-                }
-            }
-        }
-    }
-
-    private fun handleLoading(isLoading: Boolean) {
-        binding.progressBar.isVisible = isLoading
-        binding.recyclerView.isGone = isLoading
-    }
-
-    private fun showRepos(repos: List<Repo>?) {
-        repos?.let { adapter.submitList(it) }
-    }
-
-    private fun showError() {
-        val message = getString(R.string.error)
-        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
-    }
 
     companion object {
         const val ARG_PARAM1 = "param1"

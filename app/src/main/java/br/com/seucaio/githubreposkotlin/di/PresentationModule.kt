@@ -8,7 +8,7 @@ import org.koin.dsl.module
 object PresentationModule {
     fun load() {
         loadKoinModules(module {
-            viewModel { RepoListViewModel(useCase = get(), useCaseStream = get()) }
+            viewModel { RepoListViewModel(useCase = get()) }
         })
     }
 }

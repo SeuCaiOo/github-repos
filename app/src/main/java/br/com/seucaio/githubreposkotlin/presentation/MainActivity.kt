@@ -6,11 +6,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,10 +20,10 @@ import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.paging.ReposAd
 import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.paging.ReposLoadStateAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -68,8 +65,6 @@ class MainActivity : AppCompatActivity() {
         binding.retryButton.setOnClickListener { adapterPaging.retry() }
 
         setupToolbar()
-//        viewModel.getRepositories()
-        onStateChange()
     }
 
 
@@ -89,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
 
             // todo mostrar loading corretamente e remover dataSource
-            binding.progressBar.isVisible = true
+//            binding.progressBar.isVisible = true
             // Show the retry state if initial load or refresh fails.
             binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
 
@@ -133,6 +128,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    private fun setupRecyclerView() {
+        with(binding) {
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            binding.recyclerView.adapter = adapter
+            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        }
+    }
+
     private fun setupToolbar() {
         val toolbar = binding.toolbar
         toolbar.apply {
@@ -143,6 +146,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     private fun setupOptionsMenuItem(menu: Menu) {
         val optionsMenuItem = menu.findItem(R.id.action_settings)
@@ -155,41 +159,6 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
-    }
-
-
-    private fun setupRecyclerView() {
-        with(binding) {
-            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-            binding.recyclerView.adapter = adapter
-            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        }
-    }
-
-    private fun onStateChange() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    showRepos(uiState.repos)
-                    handleLoading(uiState.isLoading)
-                    if (uiState.hasError) showError()
-                }
-            }
-        }
-    }
-
-    private fun handleLoading(isLoading: Boolean) {
-        binding.progressBar.isVisible = isLoading
-        binding.recyclerView.isGone = isLoading
-    }
-
-    private fun showRepos(repos: List<Repo>?) {
-        repos?.let { adapter.submitList(it) }
-    }
-
-    private fun showError() {
-        val message = getString(R.string.error)
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }
