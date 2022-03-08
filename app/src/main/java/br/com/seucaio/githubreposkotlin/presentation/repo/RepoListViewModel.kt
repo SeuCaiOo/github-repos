@@ -12,13 +12,9 @@ class RepoListViewModel(
     private val useCase: GetRepoSearchKotlinUseCase,
 ) : ViewModel() {
 
-    private var currentSearchResult: Flow<PagingData<Repo>>? = null
 
     fun searchRepo(): Flow<PagingData<Repo>> {
-        val newResult: Flow<PagingData<Repo>> = useCase.invoke()
-            .cachedIn(viewModelScope)
-        currentSearchResult = newResult
-        return newResult
+        return useCase.invoke().cachedIn(viewModelScope)
     }
 
 }

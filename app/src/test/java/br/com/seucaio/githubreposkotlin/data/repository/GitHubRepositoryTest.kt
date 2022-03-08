@@ -1,19 +1,8 @@
 package br.com.seucaio.githubreposkotlin.data.repository
 
-import androidx.test.espresso.matcher.ViewMatchers
-import app.cash.turbine.test
-import br.com.seucaio.githubreposkotlin.core.stub.RepoStub
 import br.com.seucaio.githubreposkotlin.data.datasource.GitHubPagingSource
 import br.com.seucaio.githubreposkotlin.data.mapper.RepoMapperImpl
-import br.com.seucaio.githubreposkotlin.data.mapper.RepoSearchMapperImpl
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
-import org.hamcrest.core.IsInstanceOf
-import org.junit.Test
-import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
-import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
 
 

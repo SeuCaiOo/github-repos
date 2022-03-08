@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.data.datasource
+package br.com.seucaio.githubreposkotlin.data.datasource.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

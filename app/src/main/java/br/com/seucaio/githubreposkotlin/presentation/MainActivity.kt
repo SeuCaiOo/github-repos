@@ -1,8 +1,6 @@
 package br.com.seucaio.githubreposkotlin.presentation
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -55,8 +53,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupToolbar()
         setupRecyclerView()
-
 
         initAdapterPaging()
         search()
@@ -64,7 +62,23 @@ class MainActivity : AppCompatActivity() {
 
         binding.retryButton.setOnClickListener { adapterPaging.retry() }
 
-        setupToolbar()
+    }
+
+
+    private fun setupToolbar() {
+        val toolbar = binding.toolbar
+        toolbar.apply {
+            title = getString(R.string.repo_search_fragment_label)
+            setNavigationOnClickListener { onBackPressed() }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        with(binding) {
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            binding.recyclerView.adapter = adapter
+            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        }
     }
 
 
@@ -75,18 +89,16 @@ class MainActivity : AppCompatActivity() {
         )
         adapterPaging.addLoadStateListener { loadState ->
             // show empty list
-            val isListEmpty = loadState.refresh is LoadState.NotLoading && adapterPaging.itemCount == 0
+            val adapterIsEmpty = adapterPaging.itemCount == 0
+            val isListEmpty = loadState.refresh is LoadState.NotLoading && adapterIsEmpty
             showEmptyList(isListEmpty)
 
             // Only show the list if refresh succeeds.
-            binding.recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
+            binding.recyclerView.isVisible = loadState.mediator?.refresh is LoadState.NotLoading || adapterIsEmpty.not()
             // Show loading spinner during initial load or refresh.
-            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-
-            // todo mostrar loading corretamente e remover dataSource
-//            binding.progressBar.isVisible = true
+            binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
-            binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
+            binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error && adapterIsEmpty
 
             // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
             val errorState = loadState.source.append as? LoadState.Error
@@ -104,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         adapterPaging.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
+
     private fun initSearch() {
         // Scroll to top when the list is refreshed from network.
         lifecycleScope.launch {
@@ -116,7 +129,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun showEmptyList(show: Boolean) {
         if (show) {
             binding.emptyList.visibility = View.VISIBLE
@@ -126,39 +138,4 @@ class MainActivity : AppCompatActivity() {
             binding.recyclerView.visibility = View.VISIBLE
         }
     }
-
-
-    private fun setupRecyclerView() {
-        with(binding) {
-            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-            binding.recyclerView.adapter = adapter
-            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        }
-    }
-
-    private fun setupToolbar() {
-        val toolbar = binding.toolbar
-        toolbar.apply {
-            title = getString(R.string.repo_search_fragment_label)
-            setNavigationOnClickListener { onBackPressed() }
-            inflateMenu(R.menu.menu_main)
-            setupOptionsMenuItem(menu)
-        }
-
-    }
-
-
-    private fun setupOptionsMenuItem(menu: Menu) {
-        val optionsMenuItem = menu.findItem(R.id.action_settings)
-        optionsMenuItem?.let {
-            it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-            it.setOnMenuItemClickListener {
-                Snackbar.make(
-                    binding.root, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-                true
-            }
-        }
-    }
-
 }

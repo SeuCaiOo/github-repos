@@ -1,17 +1,11 @@
 package br.com.seucaio.githubreposkotlin.data.api
 
-import androidx.paging.PagingSource
 import br.com.seucaio.githubreposkotlin.core.utils.createRetrofit
-import br.com.seucaio.githubreposkotlin.core.stub.RepoStub
-import br.com.seucaio.githubreposkotlin.core.ext.enqueueResponse
 import br.com.seucaio.githubreposkotlin.data.datasource.GitHubPagingSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Test
-import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
 
 private const val REPO_SEARCH_SUCCESS_RESPONSE = "repository/repo_search_success_response.json"
