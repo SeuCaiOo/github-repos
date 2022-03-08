@@ -17,8 +17,8 @@
     </fragment>
     <fragment
         android:id="@+id/RepositoryListFragment"
-        android:name="br.com.seucaio.githubreposkotlin.presentation.repository.RepositoryListFragment"
-        android:label="@string/repository_list_fragment_label"
+        android:name="br.com.seucaio.githubreposkotlin.presentation.repo.RepoListFragment"
+        android:label="@string/repo_search_fragment_label"
         tools:layout="@layout/fragment_repos" />
 
 </navigation>

@@ -18,7 +18,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            app:title="@string/repository_list_fragment_label"
+            app:title="@string/repo_search_fragment_label"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -37,7 +37,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         tools:itemCount="15"
-        tools:listitem="@layout/list_item_repository" />
+        tools:listitem="@layout/list_item_repo" />
 
     <ProgressBar
         android:id="@+id/progressBar"

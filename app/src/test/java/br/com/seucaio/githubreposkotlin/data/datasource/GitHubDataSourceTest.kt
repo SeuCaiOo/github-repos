@@ -2,7 +2,7 @@ package br.com.seucaio.githubreposkotlin.data.datasource
 
 import androidx.test.espresso.matcher.ViewMatchers
 import app.cash.turbine.test
-import br.com.seucaio.githubreposkotlin.core.stub.RepositoryStub
+import br.com.seucaio.githubreposkotlin.core.stub.RepoStub
 import br.com.seucaio.githubreposkotlin.data.api.GitHubService
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.core.IsInstanceOf
@@ -13,6 +13,8 @@ import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
 
+private const val PAGE_ONE = 1
+
 @ExperimentalTime
 class GitHubDataSourceTest {
 
@@ -20,14 +22,14 @@ class GitHubDataSourceTest {
     private val dataSource = GitHubDataSourceImpl(service)
 
     @Test
-    fun `getRepositoriesSearchKotlin Should call datasource and return repositoriesResponse`() =
+    fun `getRepositoriesSearchKotlin Should call datasource and return RepoSearchResponse`() =
         runBlocking {
             // Given
-            val repositoriesResponse = RepositoryStub.Response.repositories
+            val repositoriesResponse = RepoStub.Response.repoSearch
             whenever(service.getRepositoriesSearchKotlin()).doReturn(repositoriesResponse)
 
             // When
-            val result = dataSource.getRepositoryListKotlin()
+            val result = dataSource.getRepositoryListKotlin(PAGE_ONE)
 
             // Then
             result.test {
@@ -43,7 +45,7 @@ class GitHubDataSourceTest {
         whenever(service.getRepositoriesSearchKotlin()).thenAnswer { throw expectedError }
 
         // When
-        val result = dataSource.getRepositoryListKotlin()
+        val result = dataSource.getRepositoryListKotlin(PAGE_ONE)
 
         // Then
         result.test {

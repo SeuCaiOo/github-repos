@@ -1,22 +1,22 @@
-package br.com.seucaio.githubreposkotlin.presentation.repository.adapter
+package br.com.seucaio.githubreposkotlin.presentation.repo.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import br.com.seucaio.githubreposkotlin.R
-import br.com.seucaio.githubreposkotlin.databinding.ListItemRepositoryBinding
-import br.com.seucaio.githubreposkotlin.domain.entity.Repository
+import br.com.seucaio.githubreposkotlin.databinding.ListItemRepoBinding
+import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
-class RepositoryListItemViewHolder(
-    private val binding: ListItemRepositoryBinding
+class RepoListItemViewHolder(
+    private val binding: ListItemRepoBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(repository: Repository) {
+    fun bind(repo: Repo) {
         with(binding) {
             progressBar.visibility = View.VISIBLE
             Picasso.get()
-                .load(repository.owner?.avatarUrl)
+                .load(repo.owner?.avatarUrl)
                 .error(R.drawable.ic_image)
                 .into(ivOwnerAvatar, object : Callback {
                     override fun onSuccess() {
@@ -28,11 +28,11 @@ class RepositoryListItemViewHolder(
                     }
                 })
 
-            tvName.text = repository.name
-            tvFullName.text = repository.fullName
-            tvOwnerName.text = repository.owner?.login
-            tvStars.text = repository.stargazersCount.toString()
-            tvForks.text = repository.forksCount.toString()
+            tvName.text = repo.name
+            tvFullName.text = repo.fullName
+            tvOwnerName.text = repo.owner?.login
+            tvStars.text = repo.stargazersCount.toString()
+            tvForks.text = repo.forksCount.toString()
         }
     }
 }

@@ -4,11 +4,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RepositoriesResponse(
+data class RepoSearchResponse(
     @SerialName("incomplete_results")
     val incompleteResults: Boolean = false,
     @SerialName("items")
-    val items: List<RepositoryResponse>? = null,
+    val items: List<RepoResponse>? = null,
     @SerialName("total_count")
     val totalCount: Int? = null,
 )

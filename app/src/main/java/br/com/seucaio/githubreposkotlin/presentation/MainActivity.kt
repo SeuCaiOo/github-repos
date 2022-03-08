@@ -3,7 +3,6 @@ package br.com.seucaio.githubreposkotlin.presentation
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
@@ -15,10 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.ActivityMainBinding
-import br.com.seucaio.githubreposkotlin.domain.entity.Repositories
-import br.com.seucaio.githubreposkotlin.domain.entity.Repository
-import br.com.seucaio.githubreposkotlin.presentation.repository.RepositoryListViewModel
-import br.com.seucaio.githubreposkotlin.presentation.repository.adapter.RepositoryListAdapter
+import br.com.seucaio.githubreposkotlin.domain.entity.Repo
+import br.com.seucaio.githubreposkotlin.presentation.repo.RepoListViewModel
+import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.RepoListAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,10 +25,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val viewModel by viewModel<RepositoryListViewModel>()
-    private val adapter by lazy { RepositoryListAdapter(clickRepository()) }
+    private val viewModel by viewModel<RepoListViewModel>()
+    private val adapter by lazy { RepoListAdapter(clickRepository()) }
 
-    private fun clickRepository(): (Repository) -> Unit = {
+    private fun clickRepository(): (Repo) -> Unit = {
         Snackbar.make(binding.root, "#${it.id}", Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
     }
@@ -49,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = binding.toolbar
 //        setSupportActionBar(toolbar)
         toolbar.apply {
-            title = getString(R.string.repository_list_fragment_label)
+            title = getString(R.string.repo_search_fragment_label)
             setNavigationOnClickListener { onBackPressed() }
             inflateMenu(R.menu.menu_main)
             setupOptionsMenuItem(menu)
@@ -74,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    showRepos(uiState.repositories)
+                    showRepos(uiState.repos)
                     handleLoading(uiState.isLoading)
                     if (uiState.hasError) showError()
                 }
@@ -87,8 +85,8 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.isGone = isLoading
     }
 
-    private fun showRepos(repositories: List<Repository>?) {
-        repositories?.let {
+    private fun showRepos(repos: List<Repo>?) {
+        repos?.let {
             with(binding) {
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 adapter.submitList(it)
@@ -104,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleScrollToLastItem(
         layoutManager: LinearLayoutManager,
-        adapter: RepositoryListAdapter,
+        adapter: RepoListAdapter,
     ) {
         val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
         if (lastVisibleItemPosition == adapter.itemCount - 1) {
