@@ -1,7 +1,6 @@
 package br.com.seucaio.githubreposkotlin.presentation
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -77,7 +76,8 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
             binding.recyclerView.adapter = adapter
-            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            adapter.stateRestorationPolicy =
+                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         }
     }
 
@@ -87,33 +87,44 @@ class MainActivity : AppCompatActivity() {
             header = ReposLoadStateAdapter { adapterPaging.retry() },
             footer = ReposLoadStateAdapter { adapterPaging.retry() }
         )
-        adapterPaging.addLoadStateListener { loadState ->
-            // show empty list
-            val adapterIsEmpty = adapterPaging.itemCount == 0
-            val isListEmpty = loadState.refresh is LoadState.NotLoading && adapterIsEmpty
-            showEmptyList(isListEmpty)
+        onLoadStateListener()
+        adapterPaging.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+    }
 
-            // Only show the list if refresh succeeds.
-            binding.recyclerView.isVisible = loadState.mediator?.refresh is LoadState.NotLoading || adapterIsEmpty.not()
-            // Show loading spinner during initial load or refresh.
-            binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
-            // Show the retry state if initial load or refresh fails.
-            binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error && adapterIsEmpty
+    private fun onLoadStateListener() {
+        adapterPaging.run {
+            addLoadStateListener { loadState ->
+                val itemsIsEmpty = itemCount == 0
+                val listIsEmpty = loadState.refresh is LoadState.NotLoading && itemsIsEmpty
+                val isLoading = loadState.mediator?.refresh is LoadState.Loading
+                val hasError = loadState.mediator?.refresh is LoadState.Error && itemsIsEmpty
+                val showList = loadState.source.refresh is LoadState.NotLoading
+                        || loadState.mediator?.refresh is LoadState.NotLoading
+                with(binding) {
+                    emptyList.isVisible = listIsEmpty
+                    // Only show the list if refresh succeeds.
+                    recyclerView.isVisible = showList && isLoading.not()
+                    // Show loading spinner during initial load or refresh.
+                    progressBar.isVisible = isLoading
+                    // Show the retry state if initial load or refresh fails.
+                    retryButton.isVisible = hasError
+                }
+                // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
+                val errorState = loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error
+                    ?: loadState.prepend as? LoadState.Error
+                errorState?.let {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "\uD83D\uDE28 Wooops ${it.error}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
 
-            // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-            val errorState = loadState.source.append as? LoadState.Error
-                ?: loadState.source.prepend as? LoadState.Error
-                ?: loadState.append as? LoadState.Error
-                ?: loadState.prepend as? LoadState.Error
-            errorState?.let {
-                Toast.makeText(
-                    this,
-                    "\uD83D\uDE28 Wooops ${it.error}",
-                    Toast.LENGTH_LONG
-                ).show()
             }
         }
-        adapterPaging.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
 
@@ -126,16 +137,6 @@ class MainActivity : AppCompatActivity() {
                 // Only react to cases where Remote REFRESH completes i.e., NotLoading.
                 .filter { it.refresh is LoadState.NotLoading }
                 .collect()
-        }
-    }
-
-    private fun showEmptyList(show: Boolean) {
-        if (show) {
-            binding.emptyList.visibility = View.VISIBLE
-            binding.recyclerView.visibility = View.GONE
-        } else {
-            binding.emptyList.visibility = View.GONE
-            binding.recyclerView.visibility = View.VISIBLE
         }
     }
 }
