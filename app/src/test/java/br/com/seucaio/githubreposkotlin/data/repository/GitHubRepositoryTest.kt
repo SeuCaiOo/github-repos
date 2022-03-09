@@ -1,21 +1,16 @@
 package br.com.seucaio.githubreposkotlin.data.repository
 
-import br.com.seucaio.githubreposkotlin.data.datasource.GitHubPagingSource
-import br.com.seucaio.githubreposkotlin.data.mapper.RepoMapperImpl
-import org.mockito.kotlin.mock
 import kotlin.time.ExperimentalTime
-
-
 
 @ExperimentalTime
 class GitHubRepositoryTest {
 
-    private val pagingSource = mock<GitHubPagingSource>()
-
-    private val repository = GitHubRepositoryImpl(
-        pagingSource = pagingSource,
-        mapper = RepoMapperImpl()
-    )
+//    private val pagingSource = mock<GitHubPagingSource>()
+//
+//    private val repository = GitHubRepositoryImpl(
+//        pagingSource = pagingSource,
+//        mapper = RepoMapperImpl()
+//    )
 
     /*@Test
     fun `getRepositoryListKotlin Should return RepoSearch When is success`(): Unit = runBlocking {

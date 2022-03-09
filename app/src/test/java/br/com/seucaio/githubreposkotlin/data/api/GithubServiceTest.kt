@@ -1,7 +1,6 @@
 package br.com.seucaio.githubreposkotlin.data.api
 
 import br.com.seucaio.githubreposkotlin.core.utils.createRetrofit
-import br.com.seucaio.githubreposkotlin.data.datasource.GitHubPagingSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.mockwebserver.MockWebServer
@@ -17,7 +16,7 @@ class GithubServiceTest {
     private val mockWebServer = MockWebServer()
     private val baseUrl = mockWebServer.url("/").toString()
     private val service = createRetrofit(baseUrl).create(GitHubService::class.java)
-    private val pagingSource = GitHubPagingSource(service)
+//    private val pagingSource = GitHubPagingSource(service)
 
     @After
     fun tearDown() {

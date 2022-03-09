@@ -97,10 +97,10 @@ class MainActivity : AppCompatActivity() {
             addLoadStateListener { loadState ->
                 val itemsIsEmpty = itemCount == 0
                 val listIsEmpty = loadState.refresh is LoadState.NotLoading && itemsIsEmpty
-                val isLoading = loadState.mediator?.refresh is LoadState.Loading
-                val hasError = loadState.mediator?.refresh is LoadState.Error && itemsIsEmpty
+                val isLoading = loadState.source.refresh is LoadState.Loading
+                val hasError = loadState.source.refresh is LoadState.Error && itemsIsEmpty
                 val showList = loadState.source.refresh is LoadState.NotLoading
-                        || loadState.mediator?.refresh is LoadState.NotLoading
+                        || loadState.source.refresh is LoadState.NotLoading
                 with(binding) {
                     emptyList.isVisible = listIsEmpty
                     // Only show the list if refresh succeeds.
