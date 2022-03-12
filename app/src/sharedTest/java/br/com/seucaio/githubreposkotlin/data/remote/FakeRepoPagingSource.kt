@@ -5,8 +5,8 @@ import androidx.paging.PagingState
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 
 class FakeRepoPagingSource() : PagingSource<Int, Repo>() {
-    var triggerError = false
-    var posts: List<Repo> = emptyList()
+    var triggerError: Boolean = false
+    var repoList: List<Repo> = emptyList()
         set(value) {
             println("set")
             field = value
@@ -21,7 +21,7 @@ class FakeRepoPagingSource() : PagingSource<Int, Repo>() {
         println("not error")
 
         return LoadResult.Page(
-            data = posts,
+            data = repoList,
             prevKey = null,
             nextKey = null
         )

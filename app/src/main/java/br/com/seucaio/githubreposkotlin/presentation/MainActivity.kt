@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         search()
         initSearch()
 
-        binding.retryButton.setOnClickListener { adapterPaging.retry() }
+        binding.btnRetryGetList.setOnClickListener { adapterPaging.retry() }
 
     }
 
@@ -97,18 +97,19 @@ class MainActivity : AppCompatActivity() {
             addLoadStateListener { loadState ->
                 val itemsIsEmpty = itemCount == 0
                 val listIsEmpty = loadState.refresh is LoadState.NotLoading && itemsIsEmpty
-                val isLoading = loadState.source.refresh is LoadState.Loading
-                val hasError = loadState.source.refresh is LoadState.Error && itemsIsEmpty
+                val isLoading = loadState.mediator?.refresh is LoadState.Loading
+                val hasError = loadState.mediator?.refresh is LoadState.Error && itemsIsEmpty
                 val showList = loadState.source.refresh is LoadState.NotLoading
-                        || loadState.source.refresh is LoadState.NotLoading
+                        || loadState.mediator?.refresh is LoadState.NotLoading
                 with(binding) {
+                    // todo lista vazia aparecendo na primeira vez
                     emptyList.isVisible = listIsEmpty
                     // Only show the list if refresh succeeds.
                     recyclerView.isVisible = showList && isLoading.not()
                     // Show loading spinner during initial load or refresh.
                     progressBar.isVisible = isLoading
                     // Show the retry state if initial load or refresh fails.
-                    retryButton.isVisible = hasError
+                    btnRetryGetList.isVisible = hasError
                 }
                 // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
                 val errorState = loadState.source.append as? LoadState.Error

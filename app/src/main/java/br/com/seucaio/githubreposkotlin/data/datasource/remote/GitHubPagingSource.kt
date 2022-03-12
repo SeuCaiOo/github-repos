@@ -5,10 +5,10 @@ import androidx.paging.PagingState
 import br.com.seucaio.githubreposkotlin.data.api.GitHubService
 import br.com.seucaio.githubreposkotlin.data.model.RepoResponse
 import br.com.seucaio.githubreposkotlin.data.repository.GitHubRepositoryImpl.Companion.NETWORK_PAGE_SIZE
+import br.com.seucaio.githubreposkotlin.data.repository.GitHubRepositoryImpl.Companion.GITHUB_STARTING_PAGE_INDEX
 import retrofit2.HttpException
 import java.io.IOException
 
-private const val GITHUB_STARTING_PAGE_INDEX = 1
 
 class GitHubPagingSource(
     private val service: GitHubService

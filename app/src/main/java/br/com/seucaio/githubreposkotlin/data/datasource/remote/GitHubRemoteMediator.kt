@@ -9,12 +9,10 @@ import br.com.seucaio.githubreposkotlin.data.api.GitHubService
 import br.com.seucaio.githubreposkotlin.data.datasource.local.RemoteKeys
 import br.com.seucaio.githubreposkotlin.data.datasource.local.RepoDatabase
 import br.com.seucaio.githubreposkotlin.data.mapper.RepoMapper
+import br.com.seucaio.githubreposkotlin.data.repository.GitHubRepositoryImpl.Companion.GITHUB_STARTING_PAGE_INDEX
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 import retrofit2.HttpException
 import java.io.IOException
-
-// GitHub page API is 1 based: https://developer.github.com/v3/#pagination
-private const val GITHUB_STARTING_PAGE_INDEX = 1
 
 @OptIn(ExperimentalPagingApi::class)
 class GitHubRemoteMediator(

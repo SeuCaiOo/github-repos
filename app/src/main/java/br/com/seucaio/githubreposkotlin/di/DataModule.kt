@@ -1,5 +1,6 @@
 package br.com.seucaio.githubreposkotlin.di
 
+import br.com.seucaio.githubreposkotlin.data.datasource.local.RemoteKeysDao
 import br.com.seucaio.githubreposkotlin.data.datasource.local.RepoDao
 import br.com.seucaio.githubreposkotlin.data.datasource.local.RepoDatabase
 import br.com.seucaio.githubreposkotlin.data.datasource.remote.GitHubPagingSource
@@ -22,8 +23,10 @@ object DataModule {
             }
             factory<GitHubRepository> {
                 GitHubRepositoryImpl(
-                    pagingSource = get(), mapper = RepoMapperImpl(),
-                    remoteMediator = get(), dao = get(),
+//                    pagingSource = get(), mapper = RepoMapperImpl(),
+                    remoteMediator = get(),
+                    database = get(),
+//                    dao = get(),
                 )
             }
         })
