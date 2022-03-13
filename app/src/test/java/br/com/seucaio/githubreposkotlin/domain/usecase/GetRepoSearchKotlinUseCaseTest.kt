@@ -1,8 +1,9 @@
 package br.com.seucaio.githubreposkotlin.domain.usecase
 
+import androidx.paging.PagingData
 import androidx.test.espresso.matcher.ViewMatchers
 import app.cash.turbine.test
-import br.com.seucaio.githubreposkotlin.core.stub.RepositoryStub
+import br.com.seucaio.githubreposkotlin.core.stub.RepoStub
 import br.com.seucaio.githubreposkotlin.domain.repository.GitHubRepository
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
@@ -15,21 +16,22 @@ import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-class GetRepositoryListKotlinUseCaseTest {
+class GetRepoSearchKotlinUseCaseTest {
     private val repository: GitHubRepository = mock()
-    private val useCase = GetRepositoryListKotlinUseCase(repository = repository)
+    private val useCase = GetRepoSearchKotlinUseCase(repository = repository)
 
     @Test
-    fun `invoke Should return List Repository When is success`() = runBlocking {
+    fun `invoke Should return List Repo When is success`() = runBlocking {
         // Given
-        whenever(repository.getRepositoryListKotlin()).doReturn(flow { emit(RepositoryStub.Model.repositories) })
+        val expectedResult = PagingData.from(data = listOf(RepoStub.Model.repo))
+        whenever(repository.getRepositoryListKotlin()).doReturn(flow { emit(expectedResult) })
 
         // When
         val result = useCase.invoke()
 
         // Then
         result.test {
-            assertEquals(RepositoryStub.Model.repositories, expectItem())
+            assertEquals(expectedResult, expectItem())
             expectComplete()
         }
     }

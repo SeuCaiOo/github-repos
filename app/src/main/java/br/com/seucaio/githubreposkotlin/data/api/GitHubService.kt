@@ -1,21 +1,21 @@
 package br.com.seucaio.githubreposkotlin.data.api
 
-import br.com.seucaio.githubreposkotlin.data.model.RepositoriesResponse
+import br.com.seucaio.githubreposkotlin.data.model.RepoSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GitHubService {
 
-    @GET("repositories")
-    suspend fun getRepositories() : RepositoriesResponse
+    @GET("search/repositories?q=language:kotlin&sort=stars")
+    suspend fun searchRepos(
+        @Query("page") page: Int,
+        @Query("per_page") itemsPerPage: Int
+    ): RepoSearchResponse
 
-
-    @GET("search/repositories")
+    @GET("search/repositories?q=language:kotlin&sort=stars")
     suspend fun getRepositoriesSearchKotlin(
-        @Query("q")  query: String = "language:kotlin",
-        @Query("sort")  sort: String = "stars",
         @Query("page")  page : Int = 1
-    ) : RepositoriesResponse
+    ) : RepoSearchResponse
 
 
     companion object {

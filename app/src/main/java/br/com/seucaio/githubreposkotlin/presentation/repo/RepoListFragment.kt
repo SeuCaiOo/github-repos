@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.presentation.repository
+package br.com.seucaio.githubreposkotlin.presentation.repo
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -14,15 +14,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.FragmentReposBinding
-import br.com.seucaio.githubreposkotlin.domain.entity.Repository
-import br.com.seucaio.githubreposkotlin.domain.entity.Repositories
-import br.com.seucaio.githubreposkotlin.presentation.repository.adapter.RepositoryListAdapter
+import br.com.seucaio.githubreposkotlin.domain.entity.Repo
+import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list.RepoListAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RepositoryListFragment : Fragment() {
+class RepoListFragment : Fragment() {
 
     @Parcelize
     data class Args(val repoId: Int) : Parcelable
@@ -33,11 +32,11 @@ class RepositoryListFragment : Fragment() {
 
     private var _binding: FragmentReposBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModel<RepositoryListViewModel>()
+    private val viewModel by viewModel<RepoListViewModel>()
 
-    private val adapter by lazy { RepositoryListAdapter(clickRepository()) }
+    private val adapter by lazy { RepoListAdapter(clickRepository()) }
 
-    private fun clickRepository(): (Repository) -> Unit = {
+    private fun clickRepository(): (Repo) -> Unit = {
         Snackbar.make(binding.root, "#${it.id}", Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
     }
@@ -61,9 +60,6 @@ class RepositoryListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.adapter = adapter
-        viewModel.getRepositories()
-        onStateChange()
     }
 
     override fun onDestroyView() {
@@ -71,32 +67,6 @@ class RepositoryListFragment : Fragment() {
         _binding = null
     }
 
-
-    private fun onStateChange() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    showRepos(uiState.repositories)
-                    handleLoading(uiState.isLoading)
-                    if (uiState.hasError) showError()
-                }
-            }
-        }
-    }
-
-    private fun handleLoading(isLoading: Boolean) {
-        binding.progressBar.isVisible = isLoading
-        binding.recyclerView.isGone = isLoading
-    }
-
-    private fun showRepos(repositories: Repositories?) {
-        repositories?.items?.let { adapter.submitList(it) }
-    }
-
-    private fun showError() {
-        val message = getString(R.string.error)
-        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
-    }
 
     companion object {
         const val ARG_PARAM1 = "param1"
@@ -110,7 +80,7 @@ class RepositoryListFragment : Fragment() {
         }*/
 
         @JvmStatic
-        fun newInstance(repositoryId: Int) = RepositoryListFragment().apply {
+        fun newInstance(repositoryId: Int) = RepoListFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(ARG_REPOSITORY, Args(repositoryId))
             }
@@ -118,7 +88,7 @@ class RepositoryListFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            RepositoryListFragment().apply {
+            RepoListFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

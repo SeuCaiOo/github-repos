@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="presentation.repository.RepositoryListFragment">
+    tools:context=".presentation.repo.RepoListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:itemCount="15"
-        tools:listitem="@layout/list_item_repository" />
+        tools:listitem="@layout/list_item_repo" />
 
     <ProgressBar
         android:id="@+id/progressBar"

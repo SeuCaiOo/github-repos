@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ApiErrorResponseResponse(
+data class RepoErrorResponse(
     @SerialName("documentation_url")
     val documentationUrl: String,
     @SerialName("errors")

@@ -11,6 +11,8 @@
         <entry key="app/src/main/res/layout/fragment_repos.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_repo.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_repository.xml" value="0.1707193515704154" />
+        <entry key="app/src/main/res/layout/repos_load_state_footer_view_item.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2064814814814815" />
       </map>
     </option>
