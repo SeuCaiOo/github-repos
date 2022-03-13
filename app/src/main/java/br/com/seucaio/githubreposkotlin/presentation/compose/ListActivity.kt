@@ -3,11 +3,10 @@ package br.com.seucaio.githubreposkotlin.presentation.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,7 +17,7 @@ class ListActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                Greeting("Android")
+                MyScreenContent()
             }
         }
     }
@@ -36,6 +35,26 @@ fun MyApp(content: @Composable () -> Unit) {
 }
 
 @Composable
+fun MyScreenContent(names: List<String> = listOf("Android", "iOS", "Windows")) {
+    Column {
+        for (name in names) {
+            Greeting(name = name)
+            Divider()
+        }
+        Counter()
+        Counter()
+    }
+}
+
+@Composable
+fun Counter() {
+    var counter by remember { mutableStateOf<Int>(0) }
+    Button(onClick = { counter++ }) {
+        Text(text = "Voce clicou $counter vezes")
+    }
+}
+
+@Composable
 fun Greeting(name: String) {
     Text(
         text = "Hello $name!",
@@ -47,6 +66,6 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
     MyApp {
-        Greeting("Android")
+        MyScreenContent()
     }
 }
