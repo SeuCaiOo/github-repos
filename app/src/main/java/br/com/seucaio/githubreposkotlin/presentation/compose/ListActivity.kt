@@ -1,5 +1,6 @@
 package br.com.seucaio.githubreposkotlin.presentation.compose
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,10 +14,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 import br.com.seucaio.githubreposkotlin.presentation.compose.ui.theme.GithubreposkotlinTheme
 
 class ListActivity : ComponentActivity() {
@@ -43,7 +46,7 @@ fun MyApp(content: @Composable () -> Unit) {
 
 @Composable
 fun MyScreenContent(names: List<String> = List(100) { "Android $it" }) {
-    var counterState by remember { mutableStateOf<Int>(0) }
+    var counterState by rememberSaveable { mutableStateOf<Int>(0) }
     Column(modifier = Modifier.fillMaxHeight()) {
         NameList(names = names, modifier = Modifier.Companion.weight(1f))
         Counter(
@@ -90,7 +93,12 @@ fun Greeting(name: String) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(name = "Light Mode", showBackground = true)
+@Preview(
+    name = "Dark Mode",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
 @Composable
 fun DefaultPreview() {
     MyApp {
