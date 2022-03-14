@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface GitHubRepository {
     fun getRepositoryListKotlin(): Flow<PagingData<Repo>>
+    fun getRepoList(): Flow<List<Repo>>
 }
