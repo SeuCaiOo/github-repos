@@ -42,7 +42,7 @@ class ListActivity : ComponentActivity() {
 
         setContent {
             MyApp {
-                MyScreenContent(viewModel = viewModel)
+                MyScreenContent(uiState = viewModel.uiState)
             }
         }
     }
@@ -59,8 +59,8 @@ fun MyApp(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun MyScreenContent(viewModel: ListViewModel) {
-    with(viewModel.uiState) {
+fun MyScreenContent(uiState: ListUiState) {
+    with(uiState) {
         Column(modifier = Modifier.fillMaxHeight()) {
             if (isLoading) {
                 LinearProgressIndicator(modifier = Modifier.fillMaxWidth())

@@ -47,7 +47,6 @@ class RepoActivityTest {
         val mapper = RepoMapperImpl()
         mockModule = module() {
             factory<GitHubService> { mockApi }
-            factory<GitHubDataSource> { GitHubDataSourceImpl(service = get()) }
             factory {
                 GitHubRemoteMediator(
                     service = get(),
