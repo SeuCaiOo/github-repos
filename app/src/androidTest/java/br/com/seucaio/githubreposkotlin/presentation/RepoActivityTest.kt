@@ -5,9 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.RecyclerViewMatchers.checkRecyclerViewItem
@@ -15,6 +13,8 @@ import br.com.seucaio.githubreposkotlin.api.FakeRepoService
 import br.com.seucaio.githubreposkotlin.core.stub.RepoStub
 import br.com.seucaio.githubreposkotlin.data.api.GitHubService
 import br.com.seucaio.githubreposkotlin.data.datasource.local.RepoDatabase
+import br.com.seucaio.githubreposkotlin.data.datasource.remote.GitHubDataSource
+import br.com.seucaio.githubreposkotlin.data.datasource.remote.GitHubDataSourceImpl
 import br.com.seucaio.githubreposkotlin.data.datasource.remote.GitHubRemoteMediator
 import br.com.seucaio.githubreposkotlin.data.mapper.RepoMapperImpl
 import br.com.seucaio.githubreposkotlin.data.repository.GitHubRepositoryImpl
@@ -44,19 +44,23 @@ class RepoActivityTest {
 
     @Before
     fun setup() {
+        val mapper = RepoMapperImpl()
         mockModule = module() {
             factory<GitHubService> { mockApi }
+            factory<GitHubDataSource> { GitHubDataSourceImpl(service = get()) }
             factory {
                 GitHubRemoteMediator(
                     service = get(),
                     database = mockDb,
-                    mapper = RepoMapperImpl()
+                    mapper = mapper
                 )
             }
             single<GitHubRepository> {
                 GitHubRepositoryImpl(
                     remoteMediator = get(),
-                    database = mockDb
+                    database = mockDb,
+                    dataSource= get(),
+                    mapper = mapper,
                 )
             }
         }

@@ -2,20 +2,16 @@ package br.com.seucaio.githubreposkotlin.presentation.compose
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -28,22 +24,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.domain.entity.Owner
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 import br.com.seucaio.githubreposkotlin.presentation.compose.ui.theme.GithubreposkotlinTheme
-import br.com.seucaio.githubreposkotlin.presentation.repo.RepoListViewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListActivity : ComponentActivity() {
-    private val viewModel by viewModel<RepoListViewModel>()
+    private val viewModel by viewModel<ListViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +59,8 @@ fun MyApp(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun MyScreenContent(viewModel: RepoListViewModel) {
-    with(viewModel.repoUiState) {
+fun MyScreenContent(viewModel: ListViewModel) {
+    with(viewModel.uiState) {
         Column(modifier = Modifier.fillMaxHeight()) {
             if (isLoading) {
                 LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
