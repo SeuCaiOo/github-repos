@@ -9,4 +9,9 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="repo_search_fragment_label">Repositórios Kotlin</string>
     <string name="repositories">Kotlin</string>
+    <string name="default_error_message">Erro ao obter a lista de repositórios</string>
+
+
+    <!--  Compose  -->
+    <string name="title_activity_main">ListActivity</string>
 </resources>

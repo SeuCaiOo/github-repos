@@ -1,5 +1,6 @@
 package br.com.seucaio.githubreposkotlin.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.databinding.ActivityMainBinding
+import br.com.seucaio.githubreposkotlin.presentation.compose.ListActivity
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 import br.com.seucaio.githubreposkotlin.presentation.repo.RepoListViewModel
 import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list.RepoListAdapter
@@ -53,6 +55,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupToolbar()
+
+        binding.fab.setOnClickListener {
+            val intent = Intent(this, ListActivity::class.java)
+            startActivity(intent)
+        }
+
         setupRecyclerView()
 
         initAdapterPaging()
@@ -60,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         initSearch()
 
         binding.btnRetryGetList.setOnClickListener { adapterPaging.retry() }
+
 
     }
 
