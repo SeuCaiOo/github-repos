@@ -6,10 +6,10 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import br.com.seucaio.githubreposkotlin.data.api.GitHubService
+import br.com.seucaio.githubreposkotlin.data.api.GitHubService.Companion.GITHUB_STARTING_PAGE_INDEX
 import br.com.seucaio.githubreposkotlin.data.datasource.local.RemoteKeys
 import br.com.seucaio.githubreposkotlin.data.datasource.local.RepoDatabase
 import br.com.seucaio.githubreposkotlin.data.mapper.RepoMapper
-import br.com.seucaio.githubreposkotlin.data.repository.GitHubRepositoryImpl.Companion.GITHUB_STARTING_PAGE_INDEX
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 import retrofit2.HttpException
 import java.io.IOException

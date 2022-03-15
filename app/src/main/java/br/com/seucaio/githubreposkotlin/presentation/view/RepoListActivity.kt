@@ -1,22 +1,19 @@
-package br.com.seucaio.githubreposkotlin.presentation
+package br.com.seucaio.githubreposkotlin.presentation.view
 
-import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.seucaio.githubreposkotlin.R
-import br.com.seucaio.githubreposkotlin.databinding.ActivityMainBinding
-import br.com.seucaio.githubreposkotlin.presentation.compose.ListActivity
+import br.com.seucaio.githubreposkotlin.databinding.ActivityRepoListBinding
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
-import br.com.seucaio.githubreposkotlin.presentation.repo.RepoListViewModel
-import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list.RepoListAdapter
-import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.paging.ReposAdapterPaging
-import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.paging.ReposLoadStateAdapter
+import br.com.seucaio.githubreposkotlin.presentation.view.adapter.list.RepoListAdapter
+import br.com.seucaio.githubreposkotlin.presentation.view.adapter.paging.ReposAdapterPaging
+import br.com.seucaio.githubreposkotlin.presentation.view.adapter.paging.ReposLoadStateAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -26,10 +23,8 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-class MainActivity : AppCompatActivity() {
-
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+class RepoListActivity : AppCompatActivity() {
+    private val binding by lazy { ActivityRepoListBinding.inflate(layoutInflater) }
     private val viewModel by viewModel<RepoListViewModel>()
     private val adapter by lazy { RepoListAdapter(clickRepository()) }
     private val adapterPaging by lazy { ReposAdapterPaging() }
@@ -54,12 +49,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setupToolbar()
-
-        binding.fab.setOnClickListener {
-            val intent = Intent(this, ListActivity::class.java)
-            startActivity(intent)
-        }
+        title = getString(R.string.repo_list_label)
 
         setupRecyclerView()
 
@@ -68,28 +58,17 @@ class MainActivity : AppCompatActivity() {
         initSearch()
 
         binding.btnRetryGetList.setOnClickListener { adapterPaging.retry() }
-
-
     }
 
-
-    private fun setupToolbar() {
-        val toolbar = binding.toolbar
-        toolbar.apply {
-            title = getString(R.string.repo_search_fragment_label)
-            setNavigationOnClickListener { onBackPressed() }
-        }
-    }
 
     private fun setupRecyclerView() {
         with(binding) {
-            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            recyclerView.layoutManager = LinearLayoutManager(this@RepoListActivity)
             binding.recyclerView.adapter = adapter
             adapter.stateRestorationPolicy =
                 RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         }
     }
-
 
     private fun initAdapterPaging() {
         binding.recyclerView.adapter = adapterPaging.withLoadStateHeaderAndFooter(
@@ -111,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                 val showList = loadState.source.refresh is LoadState.NotLoading
                         || loadState.mediator?.refresh is LoadState.NotLoading
                 with(binding) {
-                    // todo lista vazia aparecendo na primeira vez
                     emptyList.isVisible = listIsEmpty
                     // Only show the list if refresh succeeds.
                     recyclerView.isVisible = showList && isLoading.not()
@@ -127,8 +105,8 @@ class MainActivity : AppCompatActivity() {
                     ?: loadState.prepend as? LoadState.Error
                 errorState?.let {
                     Toast.makeText(
-                        this@MainActivity,
-                        "\uD83D\uDE28 Wooops ${it.error}",
+                        this@RepoListActivity,
+                        "Ops ${it.error}",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -136,7 +114,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun initSearch() {
         // Scroll to top when the list is refreshed from network.

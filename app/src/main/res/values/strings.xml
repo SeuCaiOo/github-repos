@@ -1,17 +1,21 @@
 <resources>
-    <string name="app_name">github-repos-kotlin</string>
+    <string name="app_name">Github Repositórios Kotlin</string>
     <string name="error">Ocorreu um erro. Tente novamente.</string>
+    <string name="msg_error_list_repositories">Erro ao obter a lista de repositórios</string>
 
+    <string name="button_paging">Paging</string>
+    <string name="button_compose_list">Compose List</string>
+    <string name="button_compose_paging">Compose Paging</string>
 
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="repo_search_fragment_label">Repositórios Kotlin</string>
-    <string name="repositories">Kotlin</string>
-    <string name="default_error_message">Erro ao obter a lista de repositórios</string>
+    <string name="action_compose">Compose</string>
+    <string name="action_paging">Paging</string>
 
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_repo_list">RepoListActivity</string>
+    <string name="repo_list_label">Repositórios Kotlin</string>
+    <string name="repositories">Repositórios</string>
 
     <!--  Compose  -->
-    <string name="title_activity_main">ListActivity</string>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_paging">PagingActivity</string>
 </resources>

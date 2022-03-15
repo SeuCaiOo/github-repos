@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.presentation.compose
+package br.com.seucaio.githubreposkotlin.presentation.compose.ui.list
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

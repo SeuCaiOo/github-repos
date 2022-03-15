@@ -13,9 +13,22 @@
         <entry key="../../../../../layout/compose-model-1647298789455.xml" value="1.0" />
         <entry key="../../../../../layout/compose-model-1647299963991.xml" value="0.33" />
         <entry key="../../../../../layout/compose-model-1647310497429.xml" value="0.4148148148148148" />
-        <entry key="../../../../../layout/compose-model-1647349318802.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1647349318802.xml" value="0.5" />
+        <entry key="../../../../../layout/compose-model-1647368031848.xml" value="0.3" />
+        <entry key="../../../../../layout/compose-model-1647403404295.xml" value="0.5" />
+        <entry key="../../../../../layout/compose-model-1647403724993.xml" value="1.5" />
+        <entry key="../../../../../layout/compose-model-1647404107476.xml" value="0.5" />
+        <entry key="../../../../../layout/compose-model-1647404314571.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1647404366187.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1647405596611.xml" value="0.22" />
+        <entry key="../../../../../layout/compose-model-1647406322003.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1647406912156.xml" value="0.15091973244147158" />
+        <entry key="../../../../../layout/compose-model-1647433415088.xml" value="0.2953703703703704" />
+        <entry key="../../../../../layout/compose-model-1647433550508.xml" value="0.22" />
+        <entry key="../../../../../layout/compose-model-1647435361851.xml" value="0.22" />
         <entry key="../../../../../layout/custom_preview.xml" value="0.36614583333333334" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.192481884057971" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_repo_list.xml" value="0.1707193515704154" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.192481884057971" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.192481884057971" />
         <entry key="app/src/main/res/layout/fragment_repos.xml" value="0.33" />

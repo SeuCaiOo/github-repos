@@ -1,10 +1,8 @@
-package br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list
+package br.com.seucaio.githubreposkotlin.presentation.view.adapter.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import br.com.seucaio.githubreposkotlin.databinding.ListItemRepoBinding
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
 
 

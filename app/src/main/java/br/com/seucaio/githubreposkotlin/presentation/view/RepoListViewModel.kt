@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.presentation.repo
+package br.com.seucaio.githubreposkotlin.presentation.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.presentation.repo.adapter.paging
+package br.com.seucaio.githubreposkotlin.presentation.view.adapter.paging
 
 import android.view.ViewGroup
 import androidx.paging.LoadState

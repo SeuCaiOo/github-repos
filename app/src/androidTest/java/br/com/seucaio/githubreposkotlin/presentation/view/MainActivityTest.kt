@@ -1,4 +1,4 @@
-//package br.com.seucaio.githubreposkotlin.presentation
+package br.com.seucaio.githubreposkotlin.presentation.view//package br.com.seucaio.githubreposkotlin.presentation
 //
 //import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 //import androidx.lifecycle.Lifecycle
@@ -19,7 +19,7 @@
 //import br.com.seucaio.githubreposkotlin.data.repository.GitHubRepositoryImpl
 //import br.com.seucaio.githubreposkotlin.domain.repository.GitHubRepository
 //import br.com.seucaio.githubreposkotlin.domain.usecase.GetRepoSearchKotlinUseCase
-//import br.com.seucaio.githubreposkotlin.presentation.repo.RepoListViewModel
+//import br.com.seucaio.githubreposkotlin.presentation.view.RepoListViewModel
 //import okhttp3.mockwebserver.Dispatcher
 //import okhttp3.mockwebserver.MockResponse
 //import okhttp3.mockwebserver.MockWebServer

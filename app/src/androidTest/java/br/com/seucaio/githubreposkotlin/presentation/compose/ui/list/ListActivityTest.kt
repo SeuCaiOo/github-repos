@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.presentation.compose
+package br.com.seucaio.githubreposkotlin.presentation.compose.ui.list
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -6,6 +6,11 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import br.com.seucaio.githubreposkotlin.R
 import br.com.seucaio.githubreposkotlin.core.stub.RepoStub
+import br.com.seucaio.githubreposkotlin.presentation.compose.ui.EmptyContentTestTag
+import br.com.seucaio.githubreposkotlin.presentation.compose.ui.MyApp
+import br.com.seucaio.githubreposkotlin.presentation.compose.ui.ProgressIndicatorTestTag
+import br.com.seucaio.githubreposkotlin.presentation.compose.ui.RepoListTestTag
+import br.com.seucaio.githubreposkotlin.presentation.compose.ui.list.*
 import br.com.seucaio.githubreposkotlin.presentation.compose.ui.theme.GithubreposkotlinTheme
 import org.junit.Rule
 import org.junit.Test
@@ -29,7 +34,7 @@ class ListActivityTest {
         composeTestRule.onNodeWithTag(ProgressIndicatorTestTag).assertDoesNotExist()
         composeTestRule.onNodeWithTag(RepoListTestTag).assertDoesNotExist()
 
-        val errorMessage = activity.getString(R.string.default_error_message)
+        val errorMessage = activity.getString(R.string.msg_error_list_repositories)
         composeTestRule.onNodeWithText(errorMessage).assertIsDisplayed()
     }
 

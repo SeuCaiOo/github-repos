@@ -2,6 +2,7 @@ package br.com.seucaio.githubreposkotlin.di
 
 import br.com.seucaio.githubreposkotlin.domain.usecase.GetRepoSearchKotlinUseCase
 import br.com.seucaio.githubreposkotlin.domain.usecase.GetRepoListUseCase
+import br.com.seucaio.githubreposkotlin.domain.usecase.GetRepoPagingUseCase
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -10,6 +11,7 @@ object DomainModule {
         loadKoinModules(module {
             factory { GetRepoSearchKotlinUseCase(repository = get()) }
             factory { GetRepoListUseCase(repository = get()) }
+            factory { GetRepoPagingUseCase(repository = get()) }
         })
     }
 }

@@ -1,10 +1,10 @@
-package br.com.seucaio.githubreposkotlin.presentation.repo.adapter.paging
+package br.com.seucaio.githubreposkotlin.presentation.view.adapter.paging
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import br.com.seucaio.githubreposkotlin.domain.entity.Repo
-import br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list.RepoListItemViewHolder
+import br.com.seucaio.githubreposkotlin.presentation.view.adapter.list.RepoListItemViewHolder
 
 class ReposAdapterPaging : PagingDataAdapter<Repo, RepoListItemViewHolder>(REPO_COMPARATOR) {
 

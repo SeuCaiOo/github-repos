@@ -1,4 +1,4 @@
-package br.com.seucaio.githubreposkotlin.presentation.repo.adapter.list
+package br.com.seucaio.githubreposkotlin.presentation.view.adapter.list
 
 import android.view.LayoutInflater
 import android.view.View

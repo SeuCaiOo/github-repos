@@ -13,14 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Githubreposkotlin">
         <activity
-            android:name=".presentation.compose.ListActivity"
+            android:name=".presentation.view.RepoListActivity"
+            android:exported="true"
+            android:label="@string/title_activity_repo_list"/>
+        <activity
+            android:name=".presentation.compose.ui.paging.PagingActivity"
+            android:exported="true"
+            android:label="@string/title_activity_paging"/>
+        <activity
+            android:name=".presentation.compose.ui.list.ListActivity"
+            android:exported="true"
+            android:label="@string/title_activity_list" />
+        <activity
+            android:name=".presentation.view.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Githubreposkotlin.NoActionBar" />
-        <activity
-            android:name=".presentation.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Githubreposkotlin.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
