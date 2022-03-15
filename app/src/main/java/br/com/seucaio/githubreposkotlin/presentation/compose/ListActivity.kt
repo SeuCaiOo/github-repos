@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +32,10 @@ import br.com.seucaio.githubreposkotlin.presentation.compose.ui.theme.Githubrepo
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+const val ProgressIndicatorTestTag = "ProgressIndicatorTestTag"
+const val RepoListTestTag = "RepoListTestTag"
+const val EmptyContentTestTag = "EmptyContentTestTag"
 
 class ListActivity : ComponentActivity() {
     private val viewModel by viewModel<ListViewModel>()
@@ -63,12 +68,21 @@ fun MyScreenContent(uiState: ListUiState) {
     with(uiState) {
         Column(modifier = Modifier.fillMaxHeight()) {
             if (isLoading) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                LinearProgressIndicator(modifier = Modifier
+                    .testTag(ProgressIndicatorTestTag)
+                    .fillMaxWidth())
             } else {
                 if (repoItems.isNullOrEmpty().not()) {
-                    RepoList(list = repoItems, modifier = Modifier.Companion.weight(1f))
+                    RepoList(
+                        list = repoItems,
+                        modifier = Modifier.Companion
+                            .testTag(RepoListTestTag)
+                            .weight(1f))
                 } else {
-                    EmptyContent()
+                    EmptyContent(modifier = Modifier
+                        .testTag(EmptyContentTestTag)
+                        .fillMaxHeight()
+                    )
                 }
             }
         }
@@ -201,8 +215,8 @@ fun RepoContent(
 }
 
 @Composable
-fun EmptyContent() {
-    Column(modifier = Modifier.fillMaxHeight()) {
+fun EmptyContent(modifier: Modifier) {
+    Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.default_error_message),
             textAlign = TextAlign.Center,
