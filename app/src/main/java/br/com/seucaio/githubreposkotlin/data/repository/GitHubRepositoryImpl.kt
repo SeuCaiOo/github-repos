@@ -15,7 +15,6 @@ class GitHubRepositoryImpl(
 
     override fun getRepositoryListKotlin(): Flow<PagingData<Repo>> {
         val pagingSourceFactory: () -> PagingSource<Int, Repo> = { database.reposDao().repos() }
-//        val pagingSourceFactory: () -> PagingSource<Int, Repo> = { dao.repos() }
 
         @OptIn(ExperimentalPagingApi::class)
         return Pager(

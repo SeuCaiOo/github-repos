@@ -2,13 +2,12 @@
     <string name="app_name">Github Repositórios Kotlin</string>
     <string name="error">Ocorreu um erro. Tente novamente.</string>
     <string name="msg_error_list_repositories">Erro ao obter a lista de repositórios</string>
+    <string name="msg_empty_list">Lista vazia</string>
+    <string name="msg_try_again">Tentar novamente</string>
 
     <string name="button_paging">Paging</string>
     <string name="button_compose_list">Compose List</string>
     <string name="button_compose_paging">Compose Paging</string>
-
-    <string name="action_compose">Compose</string>
-    <string name="action_paging">Paging</string>
 
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_repo_list">RepoListActivity</string>

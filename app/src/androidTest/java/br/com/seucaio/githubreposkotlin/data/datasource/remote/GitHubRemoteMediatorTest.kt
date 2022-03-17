@@ -46,43 +46,8 @@ class GitHubRemoteMediatorTest {
         mockApi.clearRepos()
     }
 
-    /*@Test
-    fun appendLoadReturnsSuccessResultWhenMoreDataIsPresent() = runBlocking {
-        // Add mock results for the API to return.
-//        mockRepos.forEach { repo -> mockApi.addRepo(repo) }
-        mockApi.addRepo(RepoStub.Response.repo)
-
-        val repos = listOf(RepoStub.Model.repo) ?: emptyList()
-
-        val page = PagingSource.LoadResult.Page<Int, Repo>(
-            data = repos,
-            prevKey = -1,
-            nextKey = 2
-        )
-
-        val remoteMediator = GitHubRemoteMediator(
-            database = mockDb,
-            service = mockApi,
-            mapper = RepoMapperImpl()
-        )
-        val pagingState = PagingState<Int, Repo>(
-            pages = listOf<PagingSource.LoadResult.Page<Int, Repo>>(page),
-            anchorPosition = null,
-            config = PagingConfig(10),
-            leadingPlaceholderCount = 10
-        )
-        val result = remoteMediator.load(LoadType.APPEND, pagingState)
-
-
-
-        assertTrue(result is RemoteMediator.MediatorResult.Success)
-        assertTrue((result as RemoteMediator.MediatorResult.Success).endOfPaginationReached)
-    }*/
-
-
     @Test
     fun refreshLoadReturnsSuccessResultWhenMoreDataIsPresent() = runBlocking {
-        // Add mock results for the API to return.
         // Given
         mockApi.addRepo(RepoStub.Response.repo)
 
@@ -96,9 +61,6 @@ class GitHubRemoteMediatorTest {
 
     @Test
     fun refreshLoadSuccessAndEndOfPaginationWhenNoMoreData() = runBlocking {
-        // To test endOfPaginationReached, don't set up the mockApi to return repo
-        // data here.
-
         // When
         val result = remoteMediator.load(LoadType.REFRESH, pagingState)
 
@@ -109,7 +71,6 @@ class GitHubRemoteMediatorTest {
 
     @Test
     fun refreshLoadReturnsErrorResultWhenErrorOccurs() = runBlocking {
-        // Set up failure message to throw exception from the mock API.
         // Given
         mockApi.failureMsg = "Throw test failure"
 

@@ -81,42 +81,6 @@ fun MyScreenContent(uiState: ListUiState) {
     }
 }
 
-
-@Composable
-fun NameList(names: List<String>, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier) {
-        items(items = names) { name: String ->
-            Greeting(name = name)
-            Divider()
-        }
-    }
-}
-
-@Composable
-fun Counter(count: Int, updateCount: ((Int) -> Unit)) {
-    Button(onClick = { updateCount(count + 1) }) {
-        Text(text = "Voce clicou $count vezes")
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    var isSelected by remember { mutableStateOf(false) }
-    val targetColor by animateColorAsState(
-        targetValue = if (isSelected) MaterialTheme.colors.primary else Color.Transparent,
-        animationSpec = tween(durationMillis = 1000)
-    )
-    Surface(color = targetColor) {
-        Text(
-            text = "Hello $name!",
-            modifier = Modifier
-                .clickable { isSelected = !isSelected }
-                .padding(16.dp)
-        )
-    }
-}
-
-
 @Preview(name = "Light Mode", showBackground = true)
 @Preview(
     name = "Dark Mode",
@@ -128,13 +92,8 @@ fun DefaultPreview() {
     MyApp {
         MyScreenContent(
             uiState = ListUiState(
-//                errorMessage = "",
-//                isLoading = true
                 repoItems = List<Repo>(10) { fakeRepo }
             )
         )
-
-//        RepoContent()
-//        MyScreenContent(getViewModel())
     }
 }

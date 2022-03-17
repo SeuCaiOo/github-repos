@@ -48,13 +48,9 @@ class PagingActivity : ComponentActivity() {
 @Composable
 fun PagingScreenContent(repoPaging: Flow<PagingData<Repo>>) {
     val list: LazyPagingItems<Repo> = repoPaging.collectAsLazyPagingItems()
-
-
     // Remember our own LazyListState
     val listState = rememberLazyListState()
 
-    // Remember a CoroutineScope to be able to launch
-    val coroutineScope = rememberCoroutineScope()
     LazyColumn(state = listState, modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()) {
@@ -74,6 +70,7 @@ fun PagingScreenContent(repoPaging: Flow<PagingData<Repo>>) {
                                     .align(CenterHorizontally)
                                     .fillMaxWidth())
                             } else {
+
                                 ShowProgress(modifier = Modifier
                                     .align(CenterHorizontally)
                                     .fillMaxWidth())
@@ -94,9 +91,6 @@ fun PagingScreenContent(repoPaging: Flow<PagingData<Repo>>) {
                         }
                     }
                 }
-
-                // Only show the list if refresh succeeds.
-//            binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
 
                 val errorState = source.append as? LoadState.Error
                     ?: source.prepend as? LoadState.Error

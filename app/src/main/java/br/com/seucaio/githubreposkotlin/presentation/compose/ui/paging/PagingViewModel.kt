@@ -11,8 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 class PagingViewModel(
-    private val useCase: GetRepoPagingUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val useCase: GetRepoPagingUseCase
 ) : ViewModel(){
 
     fun getRepoPaging(): Flow<PagingData<Repo>> {

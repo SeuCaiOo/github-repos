@@ -51,7 +51,6 @@ class ListActivityTest {
         composeTestRule.onNodeWithTag(ProgressIndicatorTestTag).assertExists()
         composeTestRule.onNodeWithTag(EmptyContentTestTag).assertDoesNotExist()
         composeTestRule.onNodeWithTag(RepoListTestTag).assertDoesNotExist()
-
     }
 
     @Test
@@ -67,7 +66,6 @@ class ListActivityTest {
                 }
             }
         }
-
 
         composeTestRule.onNodeWithTag(RepoListTestTag).assertExists()
         composeTestRule.onNodeWithTag(EmptyContentTestTag).assertDoesNotExist()
